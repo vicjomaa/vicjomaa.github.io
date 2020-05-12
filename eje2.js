@@ -3,7 +3,7 @@ var h = window.innerHeight;
 
 
 function setup(){
-  canvas = createCanvas(w, h);
+  createCanvas(w, h);
   background(0);
 }
 function draw(){   
@@ -27,6 +27,6 @@ function mousePressed(){
 window.onresize = function(){
   w = window.innerWidth;
   h = window.innerHeight;
-  canvas.size(w,h);
+  resizeCanvas(w,h);
   background(random(0,255),random(0,255),random(0,255));
 }
