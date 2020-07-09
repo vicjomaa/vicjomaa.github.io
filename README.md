@@ -1,2 +1,2 @@
 # vicjomaa.github.io
-Personal portfolio web page
+Personal P5.js playground
