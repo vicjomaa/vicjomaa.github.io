@@ -27,7 +27,6 @@
   
 
 
-    
 
        
     window.addEventListener('resize', () => {
