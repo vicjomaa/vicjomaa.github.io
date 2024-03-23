@@ -18,6 +18,7 @@ package.json
 package-lock.json
 svelte.config.js
 vite.config.js
+.gitignore
 
 # Editor directories and files
 .vscode/*
