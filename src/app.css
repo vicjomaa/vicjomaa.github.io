@@ -1,133 +1,79 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-
-:root{
-  --color-transparent: transparent;
-  --color-current: currentColor;
-  --color-whiteP: #f1ede8;
-  --color-blackP: #150c0f;
-  --color-light-gray: #EBEBEB;
-  --color-grayP:  rgba(0, 0, 0, 0.2) ;
-  --color-light-gray-trans: #42424225;
-  --color-orangeP: #ED965B;
-  --color-blueP: #82BAE6;
- 
-}
-/* ----------------------global style ---------------- */
-/* coloring and background  */
-
-
-.gradient-background{
-   background:  linear-gradient(90deg, var(--color-orangeP) 11.26%, var(--color-pinkP) 35.44%, var(--color-blueP) 61.07%);
-  fill:linear-gradient(90deg, var(--color-orangeP) 11.26%, var(--color-pinkP) 35.44%, var(--color-blueP) 61.07%);
-   
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.gradientPath svg path {
-  fill : url(#gradient);
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
-.blackPath svg path{
-  fill : var(--color-blackP);
-}
-
-.whitePath svg path{
-  fill : var(--color-whiteP);
-}
-
-
-
-/* custom cursor */
-#cursor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-blueP);
-  mix-blend-mode:difference;
-  z-index: 9999;
-  pointer-events: none;
+body {
+  margin: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-
-.btn-u{
-  position: relative;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
+.card {
+  padding: 2em;
+}
 
-  /* underline for text buttons */
-    .btn-u::after{
-    position: absolute;
-    content: "";
-    display: block;
-    top: 100%;
-    left: 0;
-    transform: translate(0, -50%);
-    width: 0%;
-    height: 1px;
-    transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
-    background-color: var(--color-blackP);
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
   }
-  
-  .btn-u:hover::after {
-    width: 100%;
+  a:hover {
+    color: #747bff;
   }
-
-
-  .arrow-index {
-    width: 10px;
-    height: 10px;
-    stroke-linecap: round;
-    stroke-width: 3;
-    margin-left: 10px;
-    margin-top: 2px;
-   
-}
-
-#arrow-index{
-  animation: scrollIndex 0.5s ease-in-out alternate infinite;
-}
-
-#arrow-project{
-  
-  animation: scrollProjects 0.5s ease-in-out alternate infinite;
-
-}
-
-@keyframes scrollIndex {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(2px);
+  button {
+    background-color: #f9f9f9;
   }
 }
-
-@keyframes scrollProjects {
-  0% {
-    transform: translateY(-2px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-
-
-
-  
-  
-
-
-  
-
-
