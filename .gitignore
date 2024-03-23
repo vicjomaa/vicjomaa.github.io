@@ -8,10 +8,16 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
+public
+src
 dist-ssr
 *.local
-addIframe.js
+index.html
+jsconfig.json
+package.json
+package-lock.json
+svelte.config.js
+vite.config.js
 
 # Editor directories and files
 .vscode/*
