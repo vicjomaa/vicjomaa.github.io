@@ -7,7 +7,7 @@ async function load(){
       let iframe = document.createElement("iframe")
       iframe.id="audioEffects"
       iframe.src="https://vicjomaa.github.io/"
-      iframe.allow="microphone"
+      iframe.allow="microphone; serial"
       iframe.style="position: absolute; height: 100%; right: 0; top: 50px; z-index:10; opacity:.5"
       document.body.appendChild(iframe);
   
