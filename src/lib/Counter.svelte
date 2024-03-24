@@ -1,121 +1,301 @@
 <script>
   import { onMount } from 'svelte';
 
-  let boardSelect = 'Uno';
-  let portSelect = 'COM1';
-  let baudrate = 9600;
+
+  let baudrate = 115200;
   let consoleText = '';
-  let serialConnection;
-  let options = [];
+  let serialConnection = false;
   let port = null;
 
+  let usbProductId = null;
 
-  const filters = [
-      { 'vendorId': 0x2341, 'productId': 0x003d }, // Arduino Mega 2560
-      { 'vendorId': 0x2341, 'productId': 0x8036 }, // Arduino Leonardo
-      { 'vendorId': 0x2341, 'productId': 0x8037 }, // Arduino Micro
-      { 'vendorId': 0x2341, 'productId': 0x804d }, // Arduino/Genuino Zero
-      { 'vendorId': 0x2341, 'productId': 0x804e }, // Arduino/Genuino MKR1000
-      { 'vendorId': 0x2341, 'productId': 0x804f }, // Arduino MKRZERO
-      { 'vendorId': 0x2341, 'productId': 0x8050 }, // Arduino MKR FOX 1200
-      { 'vendorId': 0x2341, 'productId': 0x8052 }, // Arduino MKR GSM 1400
-      { 'vendorId': 0x2341, 'productId': 0x8053 }, // Arduino MKR WAN 1300
-      { 'vendorId': 0x2341, 'productId': 0x8054 }, // Arduino MKR WiFi 1010
-      { 'vendorId': 0x2341, 'productId': 0x8055 }, // Arduino MKR NB 1500
-      { 'vendorId': 0x2341, 'productId': 0x8056 }, // Arduino MKR Vidor 4000
-      { 'vendorId': 0x2341, 'productId': 0x8057 }, // Arduino NANO 33 IoT
-      { 'vendorId': 0x239A, 'productId': 0x000E }, // Adafruit ItsyBitsy 32u4
-      { 'vendorId': 0x239A, 'productId': 0x800D }, // Adafruit ItsyBitsy 32u4
-  ];
+
+
+  let inputDone;
+  let outputDone;
+
+
+
+  
+
+  const devices = [
+  {
+    name: 'Arduino Mega 2560',
+    usbVendorId: 0x2341,
+    usbProductId: 0x0042
+  },
+  {
+    name: 'Arduino Leonardo',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8036
+  },
+  {
+    name: 'Arduino Micro',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8037
+  },
+  {
+    name: 'Arduino/Genuino Zero',
+    usbVendorId: 0x2341,
+    usbProductId: 0x804d
+  },
+  {
+    name: 'Arduino/Genuino MKR1000',
+    usbVendorId: 0x2341,
+    usbProductId: 0x804e
+  },
+  {
+    name: 'Arduino MKRZERO',
+    usbVendorId: 0x2341,
+    usbProductId: 0x804f
+  },
+  {
+    name: 'Arduino MKR FOX 1200',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8050
+  },
+  {
+    name: 'Arduino MKR GSM 1400',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8052
+  },
+  {
+    name: 'Arduino MKR WAN 1300',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8053
+  },
+  {
+    name: 'Arduino MKR WiFi 1010',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8054
+  },
+  {
+    name: 'Arduino MKR NB 1500',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8055
+  },
+  {
+    name: 'Arduino MKR Vidor 4000',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8056
+  },
+  {
+    name: 'Arduino NANO 33 IoT',
+    usbVendorId: 0x2341,
+    usbProductId: 0x8057
+  },
+  {
+    name: 'Adafruit ItsyBitsy 32u4',
+    usbVendorId: 0x239A,
+    usbProductId: 0x000E
+  },
+  {
+    name: 'Adafruit ItsyBitsy 32u4',
+    usbVendorId: 0x239A,
+    usbProductId: 0x800D
+  }
+];
 
   onMount(async () => {
-    await updatePortList();
-  
+
+    const notSupported = document.getElementById('notSupported');
+    notSupported.classList.toggle('hidden', 'serial' in navigator);
+    
   });
 
-  async function updatePortList() {
-      if ("serial" in navigator) {
-        try {
-          const ports = await navigator.serial.getPorts();
-          const options = ports.map((port) => {
-            console.log(port.getInfo());
-            return {
-              label: port.getInfo().usbProductId,
-              value: port.getInfo().usbVendorIdvendorId
-            };
-          });
-          
-        } catch (error) {
-          console.error('Error accessing serial ports:', error);
-        }
-      }else{
-        console.error('Error accessing serial ports:', error);
-      }
-    }
 
 
-async function requestPort(path) {
-    const port = await navigator.serial.requestPort({ path });
-    return port;
+  function findVendorIdByProductId(productId) {
+  const device = devices.find(device => device.usbProductId === productId);
+  if (device) {
+    return device.usbVendorId;
+  } else {
+    return null; // Return null if productId is not found
   }
+}
 
-  async function startSerialConnection() {
-    if (serialConnection) {
-      return;
+
+  async function connect() {
+
+          // Filter on devices with the Arduino Uno USB Vendor/Product IDs.
+          let filters = [
+            { usbVendorId: findVendorIdByProductId(usbProductId) , usbProductId: usbProductId},
+          ];
+
+          // Prompt user to select an Arduino.
+          port = await navigator.serial.requestPort({ filters });
+          // Wait for the serial port to open.
+          await port.open({ baudRate: baudrate });
+
+
+          // CODELAB: Add code to read the stream here.
+          let decoder = new TextDecoderStream();
+          inputDone = port.readable.pipeTo(decoder.writable);
+          inputStream = decoder.readable;
+
+          reader = inputStream.getReader();
+          readLoop();
+
+          // CODELAB: Add code setup the output stream here.
+          const encoder = new TextEncoderStream();
+          outputDone = encoder.readable.pipeTo(port.writable);
+          outputStream = encoder.writable;
+
+
+        // CODELAB: Send CTRL-C and turn off echo on REPL
+        writeToStream('\x03', 'echo(false);');
+
+    
+        
     }
-    port = await requestPort(portSelect);
-    const reader = port.readable.getReader();
-    async function read() {
+
+
+
+
+  
+
+/**
+ * @name connect
+ * Opens a Web Serial connection to a micro:bit and sets up the input and
+ * output stream.
+ */
+async function updateConnect() {
+  // CODELAB: Add code to request & open port here.
+  await connect();
+
+  // CODELAB: Add code setup the output stream here.
+
+  // CODELAB: Send CTRL-C and turn off echo on REPL
+
+  // CODELAB: Add code to read the stream here.
+
+}
+
+
+/**
+ * @name disconnect
+ * Closes the Web Serial connection.
+ */
+async function disconnect() {
+  //drawGrid(GRID_OFF);
+  sendGrid();
+
+  // CODELAB: Close the input stream (reader).
+
+  // CODELAB: Close the output stream.
+
+  // CODELAB: Close the port.
+
+}
+
+
+
+/**
+ * @name readLoop
+ * Reads data from the input stream and displays it on screen.
+ */
+  async function readLoop() {
+        // CODELAB: Add read loop here.
       while (true) {
-        const { done, value } = await reader.read();
+        const { value, done } = await reader.read();
+        if (value) {
+          consoleText = value + '\n';
+        }
         if (done) {
+          console.log('[readLoop] DONE', done);
+          reader.releaseLock();
           break;
         }
-        consoleText += new TextDecoder().decode(value) + '\n';
-        reader.releaseLock();
-        await reader.closed.then(read);
       }
-    }
 
-    read();
+  }
 
-    port.addEventListener('error', err => {
-      console.error('Serial connection error: ', err);
-      port.close();
-      port = null;
+
+/**
+ * @name sendGrid
+ * Iterates over the checkboxes and generates the command to set the LEDs.
+ */
+function sendGrid() {
+  // CODELAB: Generate the grid
+
+}
+
+
+/**
+ * @name writeToStream
+ * Gets a writer from the output stream and send the lines to the micro:bit.
+ * @param  {...string} lines lines to send to the micro:bit
+ */
+function writeToStream(...lines) {
+  // CODELAB: Write to output stream
+    const writer = outputStream.getWriter();
+    lines.forEach((line) => {
+      console.log('[SEND]', line);
+      writer.write(line + '\n');
     });
+    writer.releaseLock();
 
-    port.addEventListener('close', () => {
-      port = null;
-    });
+}
+
+
+/**
+ * @name watchButton
+ * Tells the micro:bit to print a string on the console on button press.
+ * @param {String} btnId Button ID (either BTN1 or BTN2)
+ */
+function watchButton(btnId) {
+  // CODELAB: Hook up the micro:bit buttons to print a string.
+
+}
+
+
+/**
+ * @name LineBreakTransformer
+ * TransformStream to parse the stream into lines.
+ */
+class LineBreakTransformer {
+  constructor() {
+    // A container for holding stream data until a new line.
+    this.container = '';
+  }
+
+  transform(chunk, controller) {
+    // CODELAB: Handle incoming chunk
 
   }
 
-  async function stopSerialConnection() {
-    if (port) {
-      port.close();
-      port = null;
-    }
+  flush(controller) {
+    // CODELAB: Flush the stream.
+
   }
+}
 
 
+/**
+ * @name JSONTransformer
+ * TransformStream to parse the stream into a JSON object.
+ */
+class JSONTransformer {
+  transform(chunk, controller) {
+    // CODELAB: Attempt to parse JSON content
 
-  async function changeBoardSelect(event) {
-    boardSelect = event.target.value;
-    await stopSerialConnection();
-    await startSerialConnection();
   }
+}
 
-  async function changePortSelect(event) {
-    portSelect = event.target.value;
-    await stopSerialConnection();
-    await startSerialConnection();
-  }
+
+/**
+ * @name buttonPushed
+ * Event handler called when one of the micro:bit buttons is pushed.
+ * @param {Object} butEvt
+ */
+function buttonPushed(butEvt) {
+  // CODELAB: micro:bit button press handler
+
+}
 
   async function changeBaudrateSelect(event) {
     baudrate = parseInt(event.target.value);
-    await stopSerialConnection();
-    await startSerialConnection();
+    await updateConnect();
   }
 </script>
 
@@ -129,31 +309,31 @@ async function requestPort(path) {
     <code>chrome://flags</code>
   </div>
   <h1>Arduino Serial Reader</h1>
+  <button on:click={disconnect}>Close Port</button>
   <div>
-    <label>
-      Board:
-      <select bind:value={boardSelect} on:change={changeBoardSelect}>
-        <option>Uno</option>
-        <option>Mega</option>
-        <option>Leonardo</option>
-      </select>
-    </label>
-    <label>
-      Port:
-      <select bind:value={portSelect} on:change={changePortSelect}>
-        {#each options as option}
-          <option value={option.value}>{option.label}</option>
-        {/each}
-      </select>
-    </label>
+    <select bind:value="{usbProductId}" on:change={updateConnect}>
+      {#each devices as device }
+        <option value="{device.usbProductId}">
+          {device.name}
+        </option>
+      {/each}
+    </select>
+  </div>
+  <div>
     <label>
       Baudrate:
       <select bind:value={baudrate} on:change={changeBaudrateSelect}>
         <option value={9600}>9600</option>
         <option value={19200}>19200</option>
         <option value={57600}>57600</option>
+        <option value={115200}>115200</option>
       </select>
     </label>
+  </div>
+  <div class="board-status">
+    Connection Status:
+    {port ?  'Connected ': 'Offline'}
+    <i class={port ? 'fas fa-check-circle' : 'fas fa-times-circle'}></i>
   </div>
   <pre>{consoleText}</pre>
 </main>
