@@ -3,6 +3,13 @@ import { svelte } from '@sveltejs/vite-plugin-svelte'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server:{
+    https:{
+      key: './osc-hydra-private.key',
+      cert: './osc-hydra.crt'
+    
+    }
+  },
   plugins: [svelte()],
   build: {
     outDir: './docs', // relative to index.html
