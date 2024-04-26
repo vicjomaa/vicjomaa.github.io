@@ -10,7 +10,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: transparent;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,8 +31,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 200px;
   min-height: 100vh;
+  background-color: transparent;
 }
 
 h1 {
@@ -45,11 +46,18 @@ h1 {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 15px 15px 0 15px;
+  overflow-y: auto;
+  background-color: transparent;
 }
+
+
 
 button {
   border-radius: 8px;
@@ -112,3 +120,34 @@ button:focus-visible {
 .board-status i.fa-times-circle {
   color: red;
 }
+
+
+/*  sections in the UI */
+
+.menu-header{
+    color: #fff;
+    border-bottom: 1px solid #888;
+    background: #222;
+    margin: 0;
+    padding-left: 5px;
+    padding-bottom: 2px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    opacity: .75;
+}
+.menu-section{
+  
+    position: relative;
+    margin: 0 0 25px 0;
+    border: 1px solid #888;
+}
+
+.menu-section-bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #222;
+    z-index: -1;
+
+}
+
