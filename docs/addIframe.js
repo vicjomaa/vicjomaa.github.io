@@ -13,7 +13,7 @@ async function load() {
         // Create an iframe for audio effects
         const iframe = document.createElement("iframe");
         iframe.id = "audioEffects";
-        iframe.src = "https://localhost:5173/";
+        iframe.src = "https://vicjomaa.github.io/";
         iframe.allow = "microphone; serial";
         iframe.style.cssText = "position: absolute; height: 100%; right: 0; top: 50px; z-index:10; opacity: 1.0;";
         document.body.appendChild(iframe);
@@ -42,7 +42,7 @@ load();
 
 function handleMessage(event) {
     // Ensure message is coming from the iframe
-    if (event.origin !== "https://localhost:5173") return;
+    if (event.origin !== "https://vicjomaa.github.io/") return;
         dataToGet = event.data;
 }
 
