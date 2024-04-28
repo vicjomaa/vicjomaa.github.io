@@ -1,47 +1,42 @@
 <script>
   import { onMount } from 'svelte';
-  import { getParsedObject} from './storeData.js';
+  import { getParsedObject } from './storeData.js';
 
-  let parsedObject = getParsedObject();
-
+  let parsedObject = null;
   let dataFromParent = null;
-  
+  let dataToSend = {};
+  let parent = null;
 
-  /* variables for collecting variable to manipulate */
+  onMount(() => {
+    window.addEventListener("message", ({ data, source}) => {
+      if (data) { // Check if data is not null or undefined
 
-  onMount(async () => {
-    // Check if parent window exists
-    if (window.parent) {
-        console.log(window.parent);
-        window.parent.postMessage({ parsedObject }, '*');
+        if (parent === null) {
+          parent = source;
+        }
+        dataFromParent = data;
+        parsedObject = getParsedObject();
+        matchSeriaCode();
+      }
+    });
+  });
 
-        const updateInterval = setInterval(() => {
-            window.parent.postMessage({ parsedObject }, '*');
-        }, 10);
 
-        return () => clearInterval(updateInterval);
-    } else {
-        console.error('Parent window does not exist.');
+  function matchSeriaCode() {
+    if (dataFromParent !== null && parsedObject !== null) {
+        for (const key in dataFromParent) {
+            if (parsedObject[key] !== null && parsedObject[key] !== undefined) {
+                dataToSend[key] = parsedObject[key].cc;
+            }
+        }
+        if(parent !== null)
+          parent.postMessage(dataToSend, '*');
     }
+}
 
-    // Add event listener to listen for messages from the parent window
-    
-    window.addEventListener('message', handleMessage);
-
-    // Clean up the event listener when the component is unmounted
-    return () => window.removeEventListener('message', handleMessage);
-});
-
-
-  function handleMessage(event) {
-      // Ensure message is coming from the parent window
-      if (event.origin !== window.location.origin) return;
-
-      // Update the receivedData variable with the parsedObject sent from the parent
-      dataFromParent = event.data.parsedObject;
-      console.log(dataFromParent);
-  }
 </script>
+
+
 
 
 <div class="divider label-text text-s">Properties Manipulable</div>
