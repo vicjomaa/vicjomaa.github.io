@@ -4,6 +4,9 @@
 var dataToGet = null;
 var dataToSend = {}; // Array to store instance IDs
 
+var url = "https://vicjomaa.github.io/";
+var urllocal = "https://localhost:5173/";
+
 if (typeof window.sCC === 'undefined') {
     // Create an array to hold our cc values and initialize to a normalized value
    
@@ -15,7 +18,7 @@ if (typeof window.sCC === 'undefined') {
             // Create an iframe for audio effects
             const iframe = document.createElement("iframe");
             iframe.id = "audioEffects";
-            iframe.src = "https://localhost:5173/";
+            iframe.src = url;
             iframe.allow = "microphone; serial";
             iframe.style.cssText = "position: absolute; height: 100%; right: 0; top: 50px; z-index:10; opacity: 1.0;";
             document.body.appendChild(iframe);
@@ -44,12 +47,6 @@ if (typeof window.sCC === 'undefined') {
     // Call load function
     load();
 
-    // Function to handle messages received from the iframe
-    function handleMessage(event) {
-        // Ensure message is coming from the iframe
-        if (event.origin !== "https://localhost:5173") return;
-        dataToGet = event.data;
-    }
 
     // Map function to map values from one range to another
     function mapLinear(value, inputMin, inputMax) {
