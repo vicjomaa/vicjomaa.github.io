@@ -35,11 +35,14 @@ if (typeof window.sCC === 'undefined') {
         d.id = "hydra-audio-effects";
         document.body.appendChild(d);
 
-        iframe.addEventListener("load", () => {
-            iframe.updateInterval = setInterval(() => {
-                iframe.contentWindow.postMessage(dataToSend, '*');
-            }, 10);
-        });
+        if(iframe){
+            iframe.addEventListener("load", () => {
+                iframe.updateInterval = setInterval(() => {
+                    iframe.contentWindow.postMessage(dataToSend, '*');
+                }, 10);
+            });
+        }
+       
 
         window.addEventListener("message", handleMessage);
     }
