@@ -1,10 +1,11 @@
 // Check if sCC class is already defined on window object
-var isLocal = window.location.href.startsWith("https://localhost:");
+
 
 var dataToGet = null;
 var dataToSend = {}; // Array to store instance IDs
 
-var url = isLocal ? "https://localhost:5173/" : "https://vicjomaa.github.io/";
+var url = "https://vicjomaa.github.io/";
+var urllocal = "https://localhost:5173/";
 
 if (typeof window.sCC === 'undefined') {
     // Create an array to hold our cc values and initialize to a normalized value
@@ -17,7 +18,7 @@ if (typeof window.sCC === 'undefined') {
             // Create an iframe for audio effects
             const iframe = document.createElement("iframe");
             iframe.id = "audioEffects";
-            iframe.src = url;
+            iframe.src = urllocal;
             iframe.allow = "microphone; serial";
             iframe.style.cssText = "position: absolute; height: 100%; right: 0; top: 50px; z-index:10; opacity: 1.0;";
             document.body.appendChild(iframe);

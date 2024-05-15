@@ -31,15 +31,12 @@
             }
         }
         if (parent !== null){
-            console.log(dataToSend);
+            //console.log(dataToSend);
             parent.postMessage(dataToSend, '*');
         }
     }
 }
-
 </script>
-
-
 
 
 <div class="divider label-text text-s">Properties Manipulable</div>
