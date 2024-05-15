@@ -1,11 +1,10 @@
 // Check if sCC class is already defined on window object
-
+var isLocal = window.location.href.startsWith("https://localhost:");
 
 var dataToGet = null;
 var dataToSend = {}; // Array to store instance IDs
 
-var url = "https://vicjomaa.github.io/";
-var urllocal = "https://localhost:5173/";
+var url = isLocal ? "https://localhost:5173/" : "https://vicjomaa.github.io/";
 
 if (typeof window.sCC === 'undefined') {
     // Create an array to hold our cc values and initialize to a normalized value
