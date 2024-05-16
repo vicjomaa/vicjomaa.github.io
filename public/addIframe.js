@@ -12,8 +12,9 @@ function cleanup() {
     const iframe = document.getElementById("audioEffects");
     if (iframe) {
         clearInterval(iframe.updateInterval);
+        window.removeEventListener("message", handleMessage);d
         iframe.remove();
-        window.removeEventListener("message", handleMessage);
+       
     }
 }
 
