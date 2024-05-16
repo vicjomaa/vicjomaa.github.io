@@ -45,7 +45,6 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
             iframe.updateInterval = setInterval(() => {
                 // Check if the iframe element exists
                 if (iframe.contentWindow) {
-                    console.log(Object.keys(dataToSend).length);
                     iframe.contentWindow.postMessage(dataToSend, '*');
                 }
             }, 10);
