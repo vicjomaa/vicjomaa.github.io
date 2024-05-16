@@ -5,6 +5,7 @@ var dataToSend = {}; // Array to store instance IDs
 var url = isLocal ? "https://localhost:5173/" : "https://vicjomaa.github.io/";
 
 function cleanup() {
+    dataToSend = {}
     const hydraAudioEffects = document.getElementById("hydra-audio-effects");
     if (hydraAudioEffects) {
         hydraAudioEffects.remove();
@@ -40,13 +41,14 @@ if (typeof window.sCC === 'undefined') {
 
         iframe.addEventListener("load", () => {
             iframe.updateInterval = setInterval(() => {
-                    console.log(iframe + dataToSend);
+                // Check if the iframe element exists
+                if (iframe.contentWindow) {
+                    console.log(Object.keys(dataToSend).length);
                     iframe.contentWindow.postMessage(dataToSend, '*');
+                }
             }, 10);
         });
         
-       
-
         window.addEventListener("message", handleMessage);
     }
 
