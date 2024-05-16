@@ -94,4 +94,4 @@ function handleMessage(event) {
 }
 
 // Clean up resources when the page unloads
-window.addEventListener("beforeunload", cleanup);
+//window.addEventListener("beforeunload", cleanup);
