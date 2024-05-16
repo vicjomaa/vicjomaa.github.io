@@ -12,7 +12,7 @@ function cleanup() {
     const iframe = document.getElementById("audioEffects");
     if (iframe) {
         clearInterval(iframe.updateInterval);
-        window.removeEventListener("message", handleMessage);d
+        window.removeEventListener("message", handleMessage);
         iframe.remove();
        
     }
@@ -36,9 +36,12 @@ if (typeof window.sCC === 'undefined') {
         d.id = "hydra-audio-effects";
         document.body.appendChild(d);
 
+
+
         iframe.addEventListener("load", () => {
             iframe.updateInterval = setInterval(() => {
-                iframe.contentWindow.postMessage(dataToSend, '*');
+                    console.log(iframe + dataToSend);
+                    iframe.contentWindow.postMessage(dataToSend, '*');
             }, 10);
         });
         
