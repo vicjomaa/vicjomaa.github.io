@@ -19,7 +19,9 @@ function cleanup() {
     }
 }
 
-if (typeof window.sCC === 'undefined') {
+
+
+if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-effects")) {
     // Function to load the input window and set up event listener
     async function load() {
         cleanup(); // Clean up existing listeners and iframe
