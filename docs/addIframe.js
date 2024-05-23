@@ -15,7 +15,7 @@ function cleanup() {
         clearInterval(iframe.updateInterval);
         window.removeEventListener("message", handleMessage);
         iframe.remove();
-       
+
     }
 }
 
@@ -49,7 +49,7 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
                 }
             }, 10);
         });
-        
+
         window.addEventListener("message", handleMessage);
     }
 
@@ -98,7 +98,7 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
             if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
                 return dataToGet[this.id];
             } else {
-               return 0;
+                return 0;
             }
         }
     }

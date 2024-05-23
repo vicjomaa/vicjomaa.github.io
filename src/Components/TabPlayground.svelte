@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from 'svelte';
-  import { getParsedObject } from './storeData.js';
+  import { onMount } from "svelte";
+  import { getParsedObject } from "./storeData.js";
 
   let parsedObject = null;
   let dataFromParent = null;
@@ -9,48 +9,46 @@
   let parent = null;
 
   onMount(() => {
-    window.addEventListener("message", ({ data, source}) => {
-      if (data) { // Check if data is not null or undefined
+    window.addEventListener("message", ({ data, source }) => {
+      if (data) {
+        // Check if data is not null or undefined
 
         if (parent === null) {
           parent = source;
         }
         dataFromParent = data;
         parsedObject = getParsedObject();
+        //console.log(parsedObject);
         matchSerialCode();
       }
     });
   });
 
-
-   // Map function to map values from one range to another
+  // Map function to map values from one range to another
   function mapLinear(value, inputMin, inputMax) {
-    const mappedValue = (value - 0) * (inputMax - inputMin) / (1023 - 0) + inputMin;
+    const mappedValue =
+      ((value - 0) * (inputMax - inputMin)) / (1023 - 0) + inputMin;
     return Number(mappedValue.toFixed(2));
   }
-
 
   function matchSerialCode() {
     dataToSend = {}; // Initialize dataToSend as an empty object
     dataToShow = {};
     if (dataFromParent !== null && parsedObject !== null) {
-        for (const key in dataFromParent) {
-            if (parsedObject[key] !== null && parsedObject[key] !== undefined) {
-                dataToSend[key] = parsedObject[key].cc;
-                //dataToShow[key] = { val: parsedObject[key].cc,   min: dataFromParent[key].min , max:dataFromParent[key].max };
-                dataToShow[key]  =  { val: parsedObject[key].cc}
-            }
+      for (const key in dataFromParent) {
+        if (parsedObject[key] !== null && parsedObject[key] !== undefined) {
+          dataToSend[key] = parsedObject[key].cc;
+          //dataToShow[key] = { val: parsedObject[key].cc,   min: dataFromParent[key].min , max:dataFromParent[key].max };
+          dataToShow[key] = { val: parsedObject[key].cc };
         }
-        if (parent !== null){
-            //console.log(dataToSend);
-            parent.postMessage(dataToSend, '*');
-        }
+      }
+      if (parent !== null) {
+        //console.log(dataToSend);
+        parent.postMessage(dataToSend, "*");
+      }
     }
-}
-
-
+  }
 </script>
-
 
 <div class="divider label-text text-s">Properties Manipulable</div>
 <div class="flex flex-wrap">
@@ -62,15 +60,15 @@
             cc{key}:
           </h2>
           <!--<div class="radial-progress text-primary" style="--value:{(mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max) / dataToShow[key].max) * 100 };" role="progressbar">{mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max )}</div> -->
-          <div class="radial-progress text-primary" style="--value:{ 100 };" role="progressbar">{mapLinear(dataToShow[key].val)}</div> 
+          <div
+            class="radial-progress text-primary"
+            style="--value:{100};"
+            role="progressbar"
+          >
+            {dataToShow[key].val}
+          </div>
         </div>
       </div>
     {/each}
   {/if}
 </div>
-
-
-
-
-   
-
