@@ -57,12 +57,18 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
     load();
 
     // Map function to map values from one range to another
-    function mapLinear(value, inputMin, inputMax) {
+    function mapAnalog(value, inputMin, inputMax) {
         return (value - 0) * (inputMax - inputMin) / (1023 - 0) + inputMin;
     }
 
+
+    // Map function to map values from one range to another
+    function map(value, inputMin, inputMax, outMin, outMax) {
+        return (value - inputMin) * (outMax - outMin) / (inputMax - inputMin) + outMin;
+    }
+
     // Define sCC class
-    class sCC {
+    /*class sCC {
         constructor(id, minVal, maxVal) {
             this.id = id;
             this.minVal = minVal;
@@ -71,9 +77,26 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
         }
 
         // Map function to map values from one range to another
-        getVal() {
+        getMap() {
             if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
                 return mapLinear(dataToGet[this.id], this.minVal, this.maxVal);
+            } else {
+               return 0;
+            }
+        }
+    
+    }*/
+
+    class sCC {
+        constructor(id) {
+            this.id = id;
+            dataToSend[this.id] = this.id;
+        }
+
+        // Map function to map values from one range to another
+        getVal() {
+            if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
+                return dataToGet[this.id];
             } else {
                return 0;
             }

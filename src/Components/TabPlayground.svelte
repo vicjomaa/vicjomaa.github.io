@@ -37,7 +37,8 @@
         for (const key in dataFromParent) {
             if (parsedObject[key] !== null && parsedObject[key] !== undefined) {
                 dataToSend[key] = parsedObject[key].cc;
-                dataToShow[key] = { val: parsedObject[key].cc,   min: dataFromParent[key].min , max:dataFromParent[key].max };
+                //dataToShow[key] = { val: parsedObject[key].cc,   min: dataFromParent[key].min , max:dataFromParent[key].max };
+                dataToShow[key]  =  { val: parsedObject[key].cc}
             }
         }
         if (parent !== null){
@@ -60,7 +61,8 @@
           <h2 class="card-title justify-center pb-5">
             cc{key}:
           </h2>
-          <div class="radial-progress text-primary" style="--value:{(mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max) / dataToShow[key].max) * 100 };" role="progressbar">{mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max )}</div>
+          <!--<div class="radial-progress text-primary" style="--value:{(mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max) / dataToShow[key].max) * 100 };" role="progressbar">{mapLinear(dataToShow[key].val,dataToShow[key].min, dataToShow[key].max )}</div> -->
+          <div class="radial-progress text-primary" style="--value:{ 100 };" role="progressbar">{mapLinear(dataToShow[key].val)}</div> 
         </div>
       </div>
     {/each}
