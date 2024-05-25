@@ -35,16 +35,6 @@
       <span class="label-text">Example code</span>
     </div>
     <div class=" w-full">
-      <div
-        class="code-head flex text-xs justify-between items-center p-3 bg-gray-800"
-      >
-        <span>Javascript</span>
-        <div class="flex flex-row items-center">
-          <!--<button class="btn btn-xs btn-ghost" on:click={copyAllCode}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" class="icon-sm"><path fill="currentColor" fill-rule="evenodd" d="M7 5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3h-2v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-9a3 3 0 0 1 3-3h2zm2 2h5a3 3 0 0 1 3 3v5h2a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-9a1 1 0 0 0-1 1zM5 9a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1z" clip-rule="evenodd"></path></svg>
-              Copy Code</button>-->
-        </div>
-      </div>
       <div id="example-code" class="code-section bg-black">
         <pre data-prefix="1" class="whitespace-pre-wrap break-words"><code
             >// Add the extension on top</code
@@ -58,26 +48,36 @@
               await loadScript("https://localhost:5173/docs/addIframe.js")
               var edges = new sCC(0)
               var rep = new sCC(1)
-              shape(() => edges.getVal()).repeat(() => rep.getVal(), 3.0, 0.0, 0.0).out()
+              shape(() => edges.val()).repeat(() => rep.val(), 3.0, 0.0, 0.0).out()
             -->
-        <pre data-prefix="4" class="whitespace-pre-wrap break-words"><code
-            >// Add a variable</code
-          ></pre>
-        <pre data-prefix="5" class="whitespace-pre-wrap break-words"><code
-            >// Associate the variable with the channel 0 </code
-          ></pre>
+        <pre data-prefix="3" class="whitespace-pre-wrap break-words"><code
+            >//Add a variable to channel 0 </code></pre>
         <pre
-          data-prefix="6"
+          data-prefix="4"
           class="whitespace-pre-wrap break-words text-lime-500"><code
             >var edges = new sCC(0)</code
           ></pre>
-        <pre data-prefix="7" class="whitespace-pre-wrap break-words"><code
+        <pre data-prefix="5" class="whitespace-pre-wrap break-words"><code
             >// Update edges in real time, by using the () => </code></pre>
         <pre
-          data-prefix="8"
+          data-prefix="7"
           class="whitespace-pre-wrap break-words text-lime-500"><code
-            >shape(() => edges.getVal()).out()</code
+            >shape(() => edges.val()).out()</code
           ></pre>
+      </div>
+    </div>
+  </div>
+  <div class="flex lg:flex-row flex-col p-2">
+    <div class="label font-bold">
+      <span class="label-text">Helper functions</span>
+    </div>
+    <div class=" w-full">
+      <div id="example-code" class="code-section bg-black">
+        <pre data-prefix="1" class="whitespace-pre-wrap break-words"><code
+            >// Map function </code></pre>
+        <pre
+          data-prefix="2"
+          class="whitespace-pre-wrap break-words text-lime-500"><code> map(valueSensor, inputMin, inputMax, outMin, outMax) </code></pre>
       </div>
     </div>
   </div>

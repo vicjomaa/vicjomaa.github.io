@@ -94,7 +94,7 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
         }
 
         // Map function to map values from one range to another
-        getVal() {
+        val() {
             if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
                 return dataToGet[this.id];
             } else {
