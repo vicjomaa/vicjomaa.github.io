@@ -19,9 +19,7 @@ function cleanup() {
     }
 }
 
-
-
-if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-effects")) {
+if (!document.getElementById("hydra-audio-effects")) {
     // Function to load the input window and set up event listener
     async function load() {
         cleanup(); // Clean up existing listeners and iframe
@@ -87,21 +85,37 @@ if (typeof window.sCC === 'undefined' || !document.getElementById("hydra-audio-e
     
     }*/
 
-    class sCC {
-        constructor(id) {
-            this.id = id;
-            dataToSend[this.id] = this.id;
-        }
+    if(typeof window.sCC === 'undefined'){
 
-        // Map function to map values from one range to another
-        val() {
-            if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
-                return dataToGet[this.id];
-            } else {
-                return 0;
+        class sCC {
+            constructor(id) {
+                this.id = id;
+                dataToSend[this.id] = this.id;
+                this.inputMin = this.inputMin;
+                this.inputMax = this.inputMax;
+    
+            }
+    
+            // Map function to map values from one range to another
+            val() {
+                if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
+                    return dataToGet[this.id];
+                } else {
+                    return 0;
+                }
+            }
+            map(outMin, outMax){
+                if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
+                    return map(value, this.inputMin, this.inputMax, outMin, outMax);
+                } else {
+                    return 0;
+                }
+    
             }
         }
+
     }
+    
 
     // Export sCC class to the window object
     window.sCC = sCC;
