@@ -56,20 +56,20 @@
           ></pre>
         <!--
               await loadScript("https://localhost:5173/docs/addIframe.js")
-              var edges = new sCC(0, 0, 8)
-              var rep = new sCC(1, 1, 15)
+              var edges = new sCC(0)
+              var rep = new sCC(1)
               shape(() => edges.getVal()).repeat(() => rep.getVal(), 3.0, 0.0, 0.0).out()
             -->
         <pre data-prefix="4" class="whitespace-pre-wrap break-words"><code
             >// Add a variable</code
           ></pre>
         <pre data-prefix="5" class="whitespace-pre-wrap break-words"><code
-            >// Map analog pin 0, with values ranging from 0 to 8</code
+            >// Associate the variable with the channel 0 </code
           ></pre>
         <pre
           data-prefix="6"
           class="whitespace-pre-wrap break-words text-lime-500"><code
-            >var edges = new sCC(0, 0, 8)</code
+            >var edges = new sCC(0)</code
           ></pre>
         <pre data-prefix="7" class="whitespace-pre-wrap break-words"><code
             >// Update edges in real time, by using the () => </code></pre>
