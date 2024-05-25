@@ -113,15 +113,18 @@ if (!document.getElementById("hydra-audio-effects")) {
     
             }
         }
+        
+        // Export sCC class to the window object
+        window.sCC = sCC;
+
+        // Log a message indicating that sCC class is defined
+        console.log("sCC class is defined.");
 
     }
     
 
-    // Export sCC class to the window object
-    window.sCC = sCC;
 
-    // Log a message indicating that sCC class is defined
-    console.log("sCC class is defined.");
+   
 }
 
 function handleMessage(event) {
