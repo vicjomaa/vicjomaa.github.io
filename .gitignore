@@ -26,6 +26,9 @@ dist-ssr
 *.key
 *.crt
 
+osc-hydra-private.key
+osc-hydra.crt
+
 
 # IDE specific files
 .vscode/
