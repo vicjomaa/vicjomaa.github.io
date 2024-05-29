@@ -103,7 +103,6 @@ if (!document.getElementById("hydra-audio-effects")) {
                     var val = dataToGet[this.id].val;
                     return mapVal(val, dataToGet[this.id].min, dataToGet[this.id].max, outMin, outMax);
                 } else {
-                    console.log( "channel"+ "out");
                     return 0;
                 }
     

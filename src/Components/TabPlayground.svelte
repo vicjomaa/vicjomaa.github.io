@@ -49,7 +49,7 @@
         for (const key in item) {
           // Initialize dataToSend[key] if it doesn't exist
           if (!dataToSend[index]) {
-            dataToSend[index] = { val:null ,min: null, max: null };
+            dataToSend[index] = { val:null ,min: null, max: null , sensor:null};
           }
 
           // Update min and max values for each key
@@ -62,6 +62,7 @@
           }
 
           dataToSend[index].val = item[key];
+          dataToSend[index].sensor = key;
 
         }
       });
@@ -76,24 +77,19 @@
 
 <div class="divider label-text text-s">Properties Manipulable</div>
 <div class="flex flex-wrap">
-  {#if Array.isArray(dataToShow)}
-    {#each dataToShow as item, index}
-      {#each Object.keys(item) as key}
-        <div class="card !p-2 bg-base-100 shadow-xl w-[110px] m-2">
-          <div class="p-2">
-            <h2 class="card-title justify-center pb-5">
-              CH:{index} - Data: {key}:
-            </h2>
-            <div
-              class="radial-progress text-s"
-              style="--value:{100};"
-              role="progressbar"
-            >
-              {item[key]}
-            </div>
-          </div>
+  {#if Object.keys(dataToSend).length > 0}
+      {#each Object.keys(dataToSend) as key, index}
+      <div class="stats w-full my-2">
+  
+        <div class="border p-2">
+          <div class="label-text">CH:{index} - Data: {dataToSend[key].sensor}:</div>
+          <div class="stat-value text-s!">{dataToSend[key].val}</div>
+          <div class="stat-desc">Min: {dataToSend[key].min}</div>
+          <div class="stat-desc">Max: {dataToSend[key].max}</div>
         </div>
-      {/each}
-    {/each}
+      </div>
+
+        {/each}
+    
   {/if}
 </div>
