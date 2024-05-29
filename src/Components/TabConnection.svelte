@@ -203,17 +203,20 @@
   }
 
   function textToJson(text) {
-    // Replace {cc:0.10, cc:-0.01, cc:0.77, ...} with [{"cc":0.10}, {"cc":-0.01}, {"cc":0.77}, ...]
-    const keyValuePairs = text.match(/(\w+):-?\d+(\.\d+)?/g); // Extract key-value pairs
+    // Remove the curly braces
+    text = text.replace(/[{}]/g, "");
 
-    if (!keyValuePairs) {
-      console.log("No key-value pairs found in the text.");
-      return null;
-    }
-
-    const jsonData = keyValuePairs.map((pair) => {
+    // Split the text into key-value pairs
+    const keyValuePairs = text.split(/,\s*/);
+    const jsonData = [];
+    keyValuePairs.forEach((pair) => {
+      // Split each pair into key and value
       const [key, value] = pair.split(":");
-      return { [key]: parseFloat(value) }; // Convert value to floating-point number
+      const numericValue = value.includes(".")
+        ? parseFloat(value)
+        : parseInt(value, 10);
+
+      jsonData.push({ [key]: numericValue });
     });
 
     return jsonData;
@@ -221,8 +224,19 @@
 </script>
 
 <div class="menu-section relative">
-  <div id="notSupported"  class="alert alert-error hidden">
-    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+  <div id="notSupported" class="alert alert-error hidden">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="stroke-current shrink-0 h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      ><path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+      /></svg
+    >
     Sorry, <b>Web Serial</b> is not supported on this device, make sure you're
     running Chrome 78 or later and have enabled the
     <code>#enable-experimental-web-platform-features</code> flag in
@@ -271,14 +285,28 @@
 
   <div class="section-stats w-full flex flex-col">
     <div class=" flex flex-col shadow w-full p-2 items-center">
-      <div class="label-text text-xs ">Connection</div>
+      <div class="label-text text-xs">Connection</div>
       <div class="badge mt-2 {port ? 'badge-accent' : 'badge-ghost'}">
         {port ? "Connected" : "Not Avaliable"}
       </div>
     </div>
-    <div role="alert" class="alert alert-error  {busyExternalD ? "" : "hidden"}">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-      <span>Sorry,<b>It looks</b> the device is being used by <code>another program</code> </span>
+    <div role="alert" class="alert alert-error {busyExternalD ? '' : 'hidden'}">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="stroke-current shrink-0 h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+        /></svg
+      >
+      <span
+        >Sorry,<b>It looks</b> the device is being used by
+        <code>another program</code>
+      </span>
     </div>
   </div>
 

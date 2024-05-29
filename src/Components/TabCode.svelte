@@ -6,24 +6,7 @@
 
   onMount(async () => {});
 
-  function copyAllCode() {
-    const codeElements = document.querySelectorAll("#example-code pre code");
-    let copiedCode = "";
 
-    codeElements.forEach((codeElement, index) => {
-      const codeText = codeElement.textContent.trim();
-      copiedCode += `// ${codeText}\n`;
-    });
-
-    navigator.clipboard
-      .writeText(copiedCode)
-      .then(() => {
-        alert("Code copied to clipboard!");
-      })
-      .catch((error) => {
-        console.error("Failed to copy code: ", error);
-      });
-  }
 </script>
 
 <div class="divider label-text text-s">How to use it</div>
