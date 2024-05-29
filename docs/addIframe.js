@@ -54,14 +54,9 @@ if (!document.getElementById("hydra-audio-effects")) {
     // Call load function
     load();
 
+  
     // Map function to map values from one range to another
-    function mapAnalog(value, inputMin, inputMax) {
-        return (value - 0) * (inputMax - inputMin) / (1023 - 0) + inputMin;
-    }
-
-
-    // Map function to map values from one range to another
-    function map(value, inputMin, inputMax, outMin, outMax) {
+    function mapVal(value, inputMin, inputMax, outMin, outMax) {
         return (value - inputMin) * (outMax - outMin) / (inputMax - inputMin) + outMin;
     }
 
@@ -90,24 +85,25 @@ if (!document.getElementById("hydra-audio-effects")) {
         class sCC {
             constructor(id) {
                 this.id = id;
-                dataToSend[this.id] = this.id;
-                this.inputMin = this.inputMin;
-                this.inputMax = this.inputMax;
+                //this.inputMax = dataToGet[this.id].max;
     
             }
     
             // Map function to map values from one range to another
             val() {
                 if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
-                    return dataToGet[this.id];
+                    var val = dataToGet[this.id].val;
+                    return val;
                 } else {
                     return 0;
                 }
             }
             map(outMin, outMax){
                 if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
-                    return map(value, this.inputMin, this.inputMax, outMin, outMax);
+                    var val = dataToGet[this.id].val;
+                    return mapVal(val, dataToGet[this.id].min, dataToGet[this.id].max, outMin, outMax);
                 } else {
+                    console.log( "channel"+ "out");
                     return 0;
                 }
     
