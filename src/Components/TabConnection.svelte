@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { devices } from "../assets/scripts/data.js";
+  import { sortedDevices } from "../assets/scripts/data.js";
   import { writable } from "svelte/store";
   import { setParsedObject } from "./storeData.js";
 
@@ -9,6 +9,7 @@
   let parsedObject = null;
   let port = null;
   let usbProductId = null;
+  let manufacturer = "Arduino";
 
   let inputDone;
   let outputDone;
@@ -25,12 +26,15 @@
   });
 
   function findVendorIdByProductId(productId) {
-    const device = devices.find((device) => device.usbProductId === productId);
-    if (device) {
-      return device.usbVendorId;
-    } else {
-      return null; // Return null if productId is not found
+    for (const manufacturer in sortedDevices) {
+      for (const board in sortedDevices[manufacturer]) {
+        const device = sortedDevices[manufacturer][board];
+        if (device.usbProductId === productId) {
+          return device.usbVendorId;
+        }
+      }
     }
+    return null; // Return null if productId is not found
   }
 
   async function connect() {
@@ -248,6 +252,19 @@
   <div class="flex lg:flex-row flex-col p-2">
     <label class="form-control w-full max-w-xs">
       <div class="label">
+        <span class="label-text">Manufacturer</span>
+      </div>
+      <select class="select select-bordered" bind:value={manufacturer}>
+        <option value="" disabled selected>Pick a board</option>
+        {#each Object.keys(sortedDevices) as manufacturer}
+          <option value={manufacturer}>
+            {manufacturer}
+          </option>
+        {/each}
+      </select>
+    </label>
+    <label class="form-control w-full max-w-xs">
+      <div class="label">
         <span class="label-text">Board</span>
       </div>
       <select
@@ -255,10 +272,10 @@
         bind:value={usbProductId}
         on:change={updateConnect}
       >
-        <option value="" disabled selected>Pick a board</option>
-        {#each devices as device}
-          <option value={device.usbProductId}>
-            {device.name}
+        <option value="" disabled selected>Pick a reference</option>
+        {#each Object.keys(sortedDevices[manufacturer]) as board}
+          <option value={sortedDevices[manufacturer][board].usbProductId}>
+            {sortedDevices[manufacturer][board].name}
           </option>
         {/each}
       </select>
