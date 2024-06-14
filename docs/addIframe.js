@@ -54,7 +54,7 @@ if (!document.getElementById("hydra-audio-effects")) {
     // Call load function
     load();
 
-  
+
     // Map function to map values from one range to another
     function mapVal(value, inputMin, inputMax, outMin, outMax) {
         return (value - inputMin) * (outMax - outMin) / (inputMax - inputMin) + outMin;
@@ -80,35 +80,50 @@ if (!document.getElementById("hydra-audio-effects")) {
     
     }*/
 
-    if(typeof window.sCC === 'undefined'){
+    function getVal(id, dataToGet) {
+        let val = 0;
+        let max = 0;
+        let min = 0;
+
+        if (dataToGet) {
+            for (let key in dataToGet) {
+                let item = dataToGet[key];
+                if (item.channel === id) {
+                    val = item.val;
+                    max = item.max;
+                    min = item.min;
+                    break; // Exit the loop once the matching item is found
+                }
+            }
+        }
+
+        return { val, max, min };
+    }
+
+    if (typeof window.sCC === 'undefined') {
 
         class sCC {
             constructor(id) {
                 this.id = id;
                 //this.inputMax = dataToGet[this.id].max;
-    
+
             }
-    
+
             // Map function to map values from one range to another
             val() {
-                if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
-                    var val = dataToGet[this.id].val;
-                    return val;
-                } else {
-                    return 0;
-                }
+                const result = getVal(this.id, dataToGet);
+                return result.val;
             }
-            map(outMin, outMax){
-                if (dataToGet && dataToGet[this.id] !== null && dataToGet[this.id] !== undefined) {
-                    var val = dataToGet[this.id].val;
-                    return mapVal(val, dataToGet[this.id].min, dataToGet[this.id].max, outMin, outMax);
-                } else {
-                    return 0;
-                }
-    
+            map(outMin, outMax) {
+                const result = getVal(this.id, dataToGet);
+                return mapVal(result.val, result.min, result.max, outMin, outMax);
+
+
             }
         }
-        
+
+
+
         // Export sCC class to the window object
         window.sCC = sCC;
 
@@ -116,10 +131,10 @@ if (!document.getElementById("hydra-audio-effects")) {
         console.log("sCC class is defined.");
 
     }
-    
 
 
-   
+
+
 }
 
 function handleMessage(event) {

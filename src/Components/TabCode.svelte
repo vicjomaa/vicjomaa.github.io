@@ -60,7 +60,7 @@
             >// Map function </code></pre>
         <pre
           data-prefix="2"
-          class="whitespace-pre-wrap break-words text-lime-500"><code> map(valueSensor, inputMin, inputMax, outMin, outMax) </code></pre>
+          class="whitespace-pre-wrap break-words text-lime-500"><code> map(outMin, outMax) </code></pre>
       </div>
     </div>
   </div>

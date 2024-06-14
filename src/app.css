@@ -161,3 +161,7 @@ button:focus-visible {
     direction: ltr;
 }
 
+.stats{
+  background-color: #000000;
+}
+

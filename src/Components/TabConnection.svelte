@@ -207,24 +207,39 @@
   }
 
   function textToJson(text) {
+    // Check if text is a string and not null or undefined
+    if (typeof text !== 'string') {
+        return [];
+    }
+
     // Remove the curly braces
     text = text.replace(/[{}]/g, "");
+
+    // Handle empty input
+    if (text.trim() === "") {
+        return [];
+    }
 
     // Split the text into key-value pairs
     const keyValuePairs = text.split(/,\s*/);
     const jsonData = [];
     keyValuePairs.forEach((pair) => {
-      // Split each pair into key and value
-      const [key, value] = pair.split(":");
-      const numericValue = value.includes(".")
-        ? parseFloat(value)
-        : parseInt(value, 10);
+        // Split each pair into key and value
+        const [key, value] = pair.split(":");
 
-      jsonData.push({ [key]: numericValue });
+        // Skip if either key or value is undefined
+        if (key === undefined || value === undefined) return;
+
+        const numericValue = value.includes(".")
+            ? parseFloat(value)
+            : parseInt(value, 10);
+
+        jsonData.push({ [key.trim()]: numericValue });
     });
 
     return jsonData;
-  }
+}
+
 </script>
 
 <div class="menu-section relative">
