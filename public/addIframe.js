@@ -70,6 +70,17 @@ if (!document.getElementById("scc-hydra")) {
         // Log a message indicating that sCC class is defined
         console.log("sCC class is defined.");
     }
+
+    // Listen for keydown event on document
+    document.addEventListener("keydown", function (event) {
+        // Check if Control + Shift + H is pressed
+        if (event.ctrlKey && event.shiftKey && event.key === 'H') {
+            const iframe = document.getElementById("scc-hydra");
+            if (iframe) {
+                iframe.style.visibility = iframe.style.visibility === "hidden" ? "visible" : "hidden";
+            }
+        }
+    });
 }
 
 function getVal(id, dataToGet) {
@@ -99,18 +110,7 @@ function handleMessage(event) {
     }
 }
 
-// Listen for keydown event on document
-document.addEventListener("keydown", function(event) {
-    // Check if Control + Shift + H is pressed
-    if (event.ctrlKey && event.shiftKey && event.key === 'H') {
-        const iframe = document.getElementById("scc-hydra");
-        if (iframe) {
-            // Toggle visibility
-            console.log("toggle");
-            iframe.style.visibility = iframe.style.visibility === "hidden" ? "visible" : "hidden";
-        }
-    }
-});
+
 
 // Clean up resources when the page unloads
 // window.addEventListener("beforeunload", cleanup);
