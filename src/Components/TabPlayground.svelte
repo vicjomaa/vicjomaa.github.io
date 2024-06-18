@@ -85,7 +85,7 @@
 
       if (window.parent !== null) {
         // Changed 'parent' to 'window.parent'
-        console.log(dataToSend);
+        //console.log(dataToSend);
         window.parent.postMessage(dataToSend, "*");
       }
     }
