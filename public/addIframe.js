@@ -106,6 +106,7 @@ document.addEventListener("keydown", function(event) {
         const iframe = document.getElementById("scc-hydra");
         if (iframe) {
             // Toggle visibility
+            console.log("toggle");
             iframe.style.visibility = iframe.style.visibility === "hidden" ? "visible" : "hidden";
         }
     }
