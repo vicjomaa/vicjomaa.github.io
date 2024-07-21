@@ -92,7 +92,7 @@
   }
 </script>
 
-<div class="divider label-text text-s">Properties Manipulable</div>
+<div class="divider label-text text-s">Sensors Channels</div>
 <div class="flex flex-wrap">
   {#if Object.keys(dataToSend).length > 0}
     {#each Object.keys(dataToSend) as key}

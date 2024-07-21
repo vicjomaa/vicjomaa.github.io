@@ -7,21 +7,22 @@
 
   // List of tab items with labels, values and assigned components
   export let items = [
-    { label: "Code",
+   
+    { label: "Connect",
     value: 1,
-    component: TabCode,
-    d:"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
-    },
-        { label: "Connect",
-    value: 2,
     component: TabConnection,
     d: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
     },
     { label: "PlayG",
-    value: 3,
+    value: 2,
     component: TabPlayground,
     d:"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
     },
+    { label: "Code",
+    value: 3,
+    component: TabCode,
+    d:"M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
+    }
     
   ];
 
