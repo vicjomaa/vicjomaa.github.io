@@ -3,9 +3,9 @@
 
 ## Step by step ⚙️
 
-* **01** Open hydra an inject the this line of code on top  await loadScript("https://vicjomaa.github.io/addIframe.js") <br>
+* **01** Open hydra and inject the this line of code on top  await loadScript("https://vicjomaa.github.io/addIframe.js") <br>
 
-* **02** Build a project in Arduino that send information from the sensor with the follow json structure .<br>
+* **02** Build a project in Arduino that sends information from the sensor with the following json structure .<br> (I will add soon the files for the master and slaves using ES-NOW)
 
 {
 id1: val1,
@@ -21,12 +21,9 @@ idN:valN
 
 
 
-
-
 ## Build in 🛠️
 * Svelte-Vite
 * powered by web serial API and D3.js
-*
 
 
 
